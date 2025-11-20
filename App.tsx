@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -177,16 +176,23 @@ const App: React.FC = () => {
       )}
 
       {/* Hero Section */}
-      <header className="relative h-screen flex items-center overflow-hidden">
+      <header className="relative h-screen flex items-center overflow-hidden bg-slate-900">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
              <img 
-                src="https://images.unsplash.com/photo-1621905251189-fc015302338d?q=80&w=2070&auto=format&fit=crop" 
-                alt="" 
+                src="https://images.pexels.com/photos/34207359/pexels-photo-34207359.jpeg" 
+                alt="Modern Logistics and Industrial Hub" 
                 className="w-full h-full object-cover"
              />
-             {/* Gradient Overlay for text readability */}
-             <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-slate-900/20"></div>
+             {/* Multiple Overlay Layers for Text Readability */}
+             {/* 1. Base dimmer for high brightness images */}
+             <div className="absolute inset-0 bg-black/30"></div>
+             
+             {/* 2. Horizontal gradient to support left-aligned hero text */}
+             <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/70 to-slate-900/20"></div>
+
+             {/* 3. Vertical gradient to support top navigation visibility */}
+             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent h-32"></div>
         </div>
         
         <div className="relative z-10 container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 mt-20">
@@ -228,7 +234,7 @@ const App: React.FC = () => {
           <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
             <div className="md:col-span-5">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
-                     {/* Interactive Map Preview */}
+                     {/* Interactive Map Preview - Removed grayscale for visibility */}
                      <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57275.64788674543!2d49.9158!3d26.1667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49e5e6651a4981%3A0x7616576271825040!2sDammam%203rd%20Industrial%20City!5e0!3m2!1sen!2ssa!4v1709640000000!5m2!1sen!2ssa"
                         width="100%" 
@@ -237,7 +243,7 @@ const App: React.FC = () => {
                         allowFullScreen 
                         loading="lazy" 
                         referrerPolicy="no-referrer-when-downgrade"
-                        className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                        className="transition-all duration-700"
                      ></iframe>
                      <div className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur p-4 text-center">
                         <a href="https://maps.app.goo.gl/NZ6FPwnFx5qjTT3d9" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-everwin-teal font-bold hover:underline">
