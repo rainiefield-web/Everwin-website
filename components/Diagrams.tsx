@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Home, Warehouse, Hammer, Scroll, Ship, TrendingUp, MapPin, ExternalLink, Zap, ArrowRight, Settings } from 'lucide-react';
+import { Building2, Home, Warehouse, Hammer, Scroll, Ship, TrendingUp, MapPin, ExternalLink, Zap, ArrowRight, Settings, Users, Banknote } from 'lucide-react';
 
 interface ContentProps {
     lang: 'en' | 'ar';
@@ -170,12 +170,14 @@ export const PerformanceMetricDiagram: React.FC<ContentProps> = ({ lang }) => {
     const stats = [
         { val: "2M", unit: "m²", labelEn: "Total Area", labelAr: "المساحة الإجمالية", icon: <MapPin /> },
         { val: "5B+", unit: "SAR", labelEn: "Total Investment", labelAr: "إجمالي الاستثمار", icon: <TrendingUp /> },
+        { val: "8B+", unit: "SAR", labelEn: "Annual Output", labelAr: "الإنتاج السنوي", icon: <Banknote /> },
+        { val: "4000+", unit: "", labelEn: "Jobs Created", labelAr: "فرص وظيفية", icon: <Users /> },
         { val: "30%", unit: "+", labelEn: "Export Target", labelAr: "حجم التصدير المتوقع", icon: <Ship /> },
         { val: "7+", unit: "", labelEn: "Manufacturing Plants", labelAr: "مصانع إنتاجية", icon: <Building2 /> },
     ];
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 my-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 my-8">
              {stats.map((stat, idx) => (
                  <motion.div 
                     key={idx} 
