@@ -21,7 +21,10 @@ const content = {
       group: "Part of Wangkang Group",
       title: "Everwin Industrial Park",
       subtitle: "A strategic manufacturing hub in Dammam 3rd Industrial City. Empowering local content, driving global exports.",
-      cta: "Explore Facilities"
+      cta: "Explore Facilities",
+      locationLabel: "Strategic Partner",
+      locationCity: "Dammam 3rd Industrial City",
+      locationDesc: "Operated by MODON. Fully integrated infrastructure with direct access to logistic networks."
     },
     about: {
       title: "Strategic Investment",
@@ -58,7 +61,10 @@ const content = {
       group: "إحدى شركات مجموعة وان كانغ",
       title: "مجمع إيفروين الصناعي",
       subtitle: "مركز صناعي استراتيجي في المدينة الصناعية الثالثة بالدمام. ندعم المحتوى المحلي ونقود الصادرات العالمية.",
-      cta: "اكتشف المرافق"
+      cta: "اكتشف المرافق",
+      locationLabel: "شريك استراتيجي",
+      locationCity: "المدينة الصناعية الثالثة بالدمام",
+      locationDesc: "تحت إشراف مدن (MODON). بنية تحتية متكاملة مع وصول مباشر لشبكات الخدمات اللوجستية."
     },
     about: {
       title: "استثمار استراتيجي",
@@ -193,7 +199,7 @@ const App: React.FC = () => {
       )}
 
       {/* Hero Section */}
-      <header className="relative min-h-screen flex items-start overflow-hidden bg-slate-900 pb-80 lg:pb-[32rem] pt-48 md:pt-60 lg:pt-80">
+      <header className="relative min-h-screen flex items-center overflow-hidden bg-slate-900 pb-40 lg:pb-60 pt-32 lg:pt-40">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
              <img 
@@ -202,42 +208,83 @@ const App: React.FC = () => {
                 className="w-full h-full object-cover animate-slow-zoom object-right md:object-center"
              />
              {/* Multiple Overlay Layers for Text Readability */}
-             {/* Darker gradient on left to support text, lighter on right to show image */}
-             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-slate-900/10"></div>
+             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/30"></div>
              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent h-40"></div>
-             
-             {/* Tech overlay Grid */}
              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay"></div>
         </div>
         
         <div className="relative z-10 container mx-auto px-6 mt-0">
-          <div className={`max-w-4xl ${isRTL ? 'text-right ml-auto' : 'text-left mr-auto'}`}>
-             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 border border-white/20 text-white text-xs tracking-wider uppercase font-bold rounded-full bg-white/5 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:bg-white/10 transition-colors cursor-default">
-              <span className="w-2 h-2 rounded-full bg-everwin-sand animate-pulse shadow-[0_0_8px_#C5A059]"></span>
-              {t.hero.group}
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-normal mb-6 text-white drop-shadow-lg">
-              {lang === 'en' ? 'Everwin' : 'إيفروين'} <br/>
-              {/* Use solid color instead of bg-clip-text to avoid rendering artifacts (yellow block) */}
-              <span className="text-[#E5C575] drop-shadow-md">{lang === 'en' ? 'Industrial Park' : 'المجمع الصناعي'}</span>
-            </h1>
-            <p className="text-lg md:text-2xl text-slate-100 leading-relaxed mb-10 max-w-2xl drop-shadow-md font-medium">
-              {t.hero.subtitle}
-            </p>
-            
-            <div className={`flex flex-col sm:flex-row gap-4 ${isRTL ? 'justify-start' : 'justify-start'}`}>
-               {/* CTA Button with Shimmer */}
-               <a href="#factories" onClick={scrollToSection('factories')} className="group relative px-8 py-4 bg-everwin-teal text-white rounded-lg font-bold shadow-lg overflow-hidden transition-all hover:scale-105 hover:shadow-everwin-teal/40 text-center sm:text-left">
-                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:animate-shine"></div>
-                  <span className="relative z-10 flex items-center justify-center sm:justify-start gap-2">
-                      {t.hero.cta} <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </span>
-               </a>
-               
-               <a href="#contact" onClick={scrollToSection('contact')} className="px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-lg font-bold shadow-lg hover:bg-white hover:text-slate-900 hover:border-white transition-all backdrop-blur-sm text-center sm:text-left">
-                  {t.nav.contact}
-               </a>
-            </div>
+          {/* Grid Layout to balance Left Side with Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Left Column: Modon Info / Strategic Partner - Fills the empty space */}
+              <div className={`lg:col-span-3 order-2 lg:order-1 flex flex-col justify-end animate-fade-in-left`}>
+                   <div className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors group/modon">
+                       <div className="flex items-center gap-2 mb-4">
+                            <MapPin size={14} className="text-everwin-teal" />
+                            <span className="text-xs font-bold uppercase tracking-widest text-slate-400 group-hover/modon:text-white transition-colors">
+                                {t.hero.locationLabel}
+                            </span>
+                       </div>
+                       
+                       {/* Modon Logo - Wrapped in white card for clean display */}
+                       <a 
+                            href="https://modon.gov.sa/en/Cities/IndustrialCities/Pages/IndustrialCity.aspx?CityId=f00da909-20dc-44ed-94f9-d7f645c7a6c0" 
+                            target="_blank"
+                            rel="noreferrer"
+                            className="block mb-5 transform group-hover/modon:scale-105 transition-transform duration-300 bg-white rounded-lg p-4 w-fit shadow-lg"
+                        >
+                            <img 
+                                src="https://modon.gov.sa/Style%20Library/Images/ModonLogo.jpg" 
+                                alt="MODON Logo" 
+                                className="h-12 w-auto object-contain"
+                            />
+                        </a>
+
+                        <h3 className="text-white font-bold text-lg leading-tight mb-2">
+                             {t.hero.locationCity}
+                        </h3>
+                        <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                             {t.hero.locationDesc}
+                        </p>
+                        <a 
+                             href="https://modon.gov.sa/en/Cities/IndustrialCities/Pages/IndustrialCity.aspx?CityId=f00da909-20dc-44ed-94f9-d7f645c7a6c0" 
+                             target="_blank" 
+                             rel="noreferrer"
+                             className="text-everwin-teal text-xs font-bold uppercase tracking-wider flex items-center gap-1 hover:underline"
+                        >
+                             {lang === 'en' ? 'Visit Official Site' : 'زيارة الموقع الرسمي'} <ExternalLink size={12} />
+                        </a>
+                   </div>
+              </div>
+
+              {/* Main Content Column */}
+              <div className={`lg:col-span-9 order-1 lg:order-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+                <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 border border-white/20 text-white text-xs tracking-wider uppercase font-bold rounded-full bg-white/5 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:bg-white/10 transition-colors cursor-default">
+                    <span className="w-2 h-2 rounded-full bg-everwin-sand animate-pulse shadow-[0_0_8px_#C5A059]"></span>
+                    {t.hero.group}
+                </div>
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-normal mb-6 text-white drop-shadow-lg">
+                    {lang === 'en' ? 'Everwin' : 'إيفروين'} <br/>
+                    <span className="text-[#E5C575] drop-shadow-md">{lang === 'en' ? 'Industrial Park' : 'المجمع الصناعي'}</span>
+                </h1>
+                <p className="text-lg md:text-2xl text-slate-100 leading-relaxed mb-10 max-w-2xl drop-shadow-md font-medium">
+                    {t.hero.subtitle}
+                </p>
+                
+                <div className={`flex flex-col sm:flex-row gap-4 ${isRTL ? 'justify-start' : 'justify-start'}`}>
+                    <a href="#factories" onClick={scrollToSection('factories')} className="group relative px-8 py-4 bg-everwin-teal text-white rounded-lg font-bold shadow-lg overflow-hidden transition-all hover:scale-105 hover:shadow-everwin-teal/40 text-center sm:text-left">
+                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:animate-shine"></div>
+                        <span className="relative z-10 flex items-center justify-center sm:justify-start gap-2">
+                            {t.hero.cta} <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        </span>
+                    </a>
+                    
+                    <a href="#contact" onClick={scrollToSection('contact')} className="px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-lg font-bold shadow-lg hover:bg-white hover:text-slate-900 hover:border-white transition-all backdrop-blur-sm text-center sm:text-left">
+                        {t.nav.contact}
+                    </a>
+                </div>
+              </div>
           </div>
         </div>
       </header>
