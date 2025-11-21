@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { SurfaceCodeDiagram, TransformerDecoderDiagram, PerformanceMetricDiagram } from './components/Diagrams';
+import { DevelopmentDashboard } from './components/DevelopmentDashboard';
 import { Menu, X, Globe, Mail, MapPin, Scroll, ExternalLink, ChevronRight } from 'lucide-react';
 
 // --- CONTENT DICTIONARY ---
@@ -343,6 +344,9 @@ const App: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* Development Progress Dashboard */}
+        <DevelopmentDashboard lang={lang} />
 
         {/* Factories Grid */}
         <section id="factories" className="py-24 bg-white relative">
