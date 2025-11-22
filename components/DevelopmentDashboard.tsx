@@ -34,9 +34,11 @@ export const DevelopmentDashboard: React.FC<DashboardProps> = ({ lang }) => {
 
     // Zone Grid Logic
     const totalPlots = 42; // 6x7 Grid
-    // Create a visual pattern for allocated plots (approx 35%)
-    // We use a deterministic pattern to look "techy" but random
-    const isAllocated = (i: number) => (i % 3 === 0 || i % 7 === 0 || i === 13 || i === 25) && i < 38;
+    
+    // Specific indices matching the user's selection
+    const allocatedIndices = new Set([0, 1, 6, 7, 24, 25, 26, 27, 30, 31, 32, 33, 36, 37, 38, 39]);
+    
+    const isAllocated = (i: number) => allocatedIndices.has(i);
 
     return (
         <section className="relative py-24 overflow-hidden bg-slate-900">
