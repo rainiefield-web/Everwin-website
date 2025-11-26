@@ -1,16 +1,92 @@
 
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Building2, Home, Warehouse, Hammer, Scroll, Ship, TrendingUp, MapPin, ExternalLink, Zap, ArrowRight, Settings, Users, Banknote } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Building2, Home, Warehouse, Hammer, Scroll, Ship, TrendingUp, MapPin, ExternalLink, Zap, Settings, Users, Banknote, X, Image as ImageIcon } from 'lucide-react';
 
 interface ContentProps {
     lang: 'en' | 'ar';
 }
+
+// --- NEWS MODAL COMPONENT ---
+interface NewsData {
+    date: string;
+    titleEn: string;
+    titleAr: string;
+    textEn: string;
+    textAr: string;
+    images: string[];
+}
+
+const NewsModal: React.FC<{ isOpen: boolean; onClose: () => void; data: NewsData | null; lang: 'en' | 'ar' }> = ({ isOpen, onClose, data, lang }) => {
+    if (!isOpen || !data) return null;
+    const isRTL = lang === 'ar';
+
+    return (
+        <AnimatePresence>
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-slate-900/80 backdrop-blur-md"
+                onClick={onClose}
+            >
+                <motion.div 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    className="bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl overflow-hidden relative"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {/* Header Image/Gradient */}
+                    <div className="h-32 bg-slate-900 relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-everwin-teal to-slate-900 opacity-50"></div>
+                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+                        <button 
+                            onClick={onClose}
+                            className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors z-20 backdrop-blur-sm"
+                        >
+                            <X size={24} />
+                        </button>
+                    </div>
+
+                    <div className={`p-8 md:p-10 ${isRTL ? 'text-right' : 'text-left'}`}>
+                        <div className="inline-block px-3 py-1 bg-everwin-teal/10 text-everwin-teal rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                            {data.date}
+                        </div>
+                        
+                        <h2 className={`text-3xl font-bold text-slate-900 mb-6 leading-tight ${isRTL ? 'font-arabic' : 'font-serif'}`}>
+                            {lang === 'en' ? data.titleEn : data.titleAr}
+                        </h2>
+                        
+                        <div className={`prose max-w-none text-slate-600 leading-relaxed text-lg mb-10 whitespace-pre-line ${isRTL ? 'font-arabic' : 'font-sans'}`}>
+                            {lang === 'en' ? data.textEn : data.textAr}
+                        </div>
+
+                        {/* Image Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {data.images.map((img, idx) => (
+                                <div key={idx} className="group relative h-64 md:h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all bg-slate-900 border border-slate-100">
+                                    <img 
+                                        src={img} 
+                                        alt={`Event photo ${idx + 1}`} 
+                                        className="w-full h-full object-contain" 
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+            </motion.div>
+        </AnimatePresence>
+    );
+};
+
 
 // --- FACTORY GRID (Industrial Blueprint Style) ---
 export const SurfaceCodeDiagram: React.FC<ContentProps> = ({ lang }) => {
@@ -94,15 +170,48 @@ export const SurfaceCodeDiagram: React.FC<ContentProps> = ({ lang }) => {
 // --- TIMELINE (Industrial Process Flow) ---
 export const TransformerDecoderDiagram: React.FC<ContentProps> = ({ lang }) => {
     const isRTL = lang === 'ar';
+    const [modalOpen, setModalOpen] = useState(false);
     
+    // News content
+    const signingCeremonyData: NewsData = {
+        date: "2025-11-25",
+        titleEn: "Official Signing Ceremony with Modon at 21st UNIDO Event",
+        titleAr: "حفل التوقيع الرسمي مع مدن في حدث اليونيدو الحادي والعشرين",
+        textEn: `Accompanied by auspicious multicolored clouds, the 1.8 million–square-meter Wangkang Group Dammam Everwin Industrial Park was officially signed and finalized with Modon at the 21st UNIDO Event, witnessed by two honorable ministers from the Saudi Ministry of Industry and Mineral Resources. With a total investment of approximately 5 billion riyals, the project will develop a comprehensive building-materials industrial park in Dammam, featuring eight major factories—including the Middle East’s largest aluminum profiles, sanitary ware, papermaking, and steel structure facilities.
+
+Advancing cooperation through practicality and demonstrating strength through concrete projects, China and Saudi Arabia are working hand in hand to open a new chapter. ✨`,
+        textAr: `وسط أجواء احتفالية، تم التوقيع الرسمي والانتهاء من إجراءات مجمع إيفروين الصناعي التابع لمجموعة وان كانغ في الدمام، والذي تبلغ مساحته 1.8 مليون متر مربع، مع هيئة مدن (MODON) خلال فعاليات الدورة الحادية والعشرين لليونيدو، وبحضور وزيرين من وزارة الصناعة والثروة المعدنية السعودية. باستثمار إجمالي يقارب 5 مليارات ريال، سيتم تطوير مجمع صناعي شامل لمواد البناء في الدمام، يضم ثمانية مصانع رئيسية - تشمل أكبر مصانع مقاطع الألمنيوم والأدوات الصحية وصناعة الورق والهياكل الفولاذية في الشرق الأوسط.
+
+من خلال تعزيز التعاون عبر الخطوات العملية وإثبات القوة من خلال المشاريع الملموسة، تعمل الصين والمملكة العربية السعودية يداً بيد لفتح فصل جديد. ✨`,
+        images: [
+            "https://i.postimg.cc/0NPrpbZ3/1.jpg",
+            "https://i.postimg.cc/5tbjw6nf/Copy-of-DSC03633.jpg",
+            "https://i.postimg.cc/xdnqKctr/Copy-of-DSC03740.jpg",
+            "https://i.postimg.cc/YSMj1hbH/Copy-of-DSC03755.jpg"
+        ]
+    };
+
     const phases = [
-        { year: "Q4 2025", en: "Construction Started", ar: "بدء أعمال الإنشاء", status: "done" },
+        { 
+            year: "Q4 2025", 
+            en: "Construction Started", 
+            ar: "بدء أعمال الإنشاء", 
+            status: "done",
+            hasNews: true
+        },
         { year: "2027", en: "Phase 1 Completion", ar: "اكتمال المرحلة الأولى", status: "active" },
         { year: "2030", en: "Phase 2 Completion", ar: "اكتمال المرحلة الثانية", status: "future" },
     ];
 
     return (
         <div className="relative py-16">
+            <NewsModal 
+                isOpen={modalOpen} 
+                onClose={() => setModalOpen(false)} 
+                data={signingCeremonyData} 
+                lang={lang} 
+            />
+
             {/* Connecting Line Background */}
             <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700 -translate-y-1/2 hidden md:block opacity-30"></div>
             
@@ -114,12 +223,11 @@ export const TransformerDecoderDiagram: React.FC<ContentProps> = ({ lang }) => {
                 transition={{ duration: 1.5, ease: "easeInOut" }}
             ></motion.div>
             
-            {/* Increased md:gap-4 to md:gap-24 to prevent text cards from overlapping */}
             <div className={`flex flex-col md:flex-row justify-between items-center gap-12 md:gap-24 relative z-10 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {phases.map((phase, idx) => (
                     <motion.div 
                         key={idx} 
-                        className="relative group cursor-default"
+                        className="relative group"
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ delay: idx * 0.3 }}
@@ -149,14 +257,31 @@ export const TransformerDecoderDiagram: React.FC<ContentProps> = ({ lang }) => {
                             )}
                         </div>
 
-                        {/* Label Card - Reduced width to md:w-52 to fit better */}
+                        {/* Label Card */}
                         <motion.div 
-                            className={`mt-6 text-center bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 md:w-52 md:absolute md:left-1/2 md:-translate-x-1/2`}
+                            className={`mt-6 text-center bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 md:w-52 md:absolute md:left-1/2 md:-translate-x-1/2 flex flex-col items-center gap-2`}
                         >
                             <h4 className={`font-bold text-white text-lg ${isRTL ? 'font-arabic' : 'font-sans'}`}>
                                 {isRTL ? phase.ar : phase.en}
                             </h4>
-                            <div className="h-0.5 w-0 bg-everwin-sand mx-auto mt-2 group-hover:w-1/2 transition-all duration-300"></div>
+                            
+                            {/* News Button Logic */}
+                            {phase.hasNews && (
+                                <button 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setModalOpen(true);
+                                    }}
+                                    className="mt-1 px-3 py-1 bg-everwin-teal/20 hover:bg-everwin-teal text-everwin-teal hover:text-white border border-everwin-teal/50 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 group/btn"
+                                >
+                                    <ImageIcon size={12} />
+                                    {lang === 'en' ? 'View Ceremony' : 'صور الحفل'}
+                                </button>
+                            )}
+                            
+                            {!phase.hasNews && (
+                                <div className="h-0.5 w-0 bg-everwin-sand mx-auto mt-2 group-hover:w-1/2 transition-all duration-300"></div>
+                            )}
                         </motion.div>
                     </motion.div>
                 ))}
